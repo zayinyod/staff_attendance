@@ -1,8 +1,8 @@
 from django.contrib import admin
 from django.urls import path
-from attendance.views import frontpage
+from .views import FrontPage
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", frontpage)
+    path("", FrontPage.as_view())
 ]
