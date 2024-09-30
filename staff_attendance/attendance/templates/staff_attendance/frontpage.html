@@ -1,11 +1,28 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>test</h1>
-</body>
+    <title>Staff Attendance</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  </head>
+
+  <body>
+    <section class="header">
+      <p>
+        <a class="btn" href="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js">Log in</a>
+      </p>
+    </section>
+
+    <div class="main">
+      <h1>Staff Attendance</h1>
+      <p id="realtime"></p>
+    </div>
+
+    <script src="{% static 'js/time.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+    <script src="{% static 'js/darkmode.js' %}"></script>
+  </body>
 </html>
