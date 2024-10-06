@@ -16,7 +16,7 @@ function showClock() {
   let nowMin  = twoDigit( nowTime.getMinutes() );
   let nowSec  = twoDigit( nowTime.getSeconds() );
     
-  let msg = nowYear + "/" + nowMonth + "/" + nowDate + " " + nowHour + ":" + nowMin + ":" + nowSec;
-  document.getElementById("realtime").innerHTML = msg;
+  let msg = nowYear + "." + nowMonth + "." + nowDate + " " + nowHour + ":" + nowMin + ":" + nowSec;
+  document.getElementById("clock").innerHTML = msg;
 }
 setInterval('showClock()',1000);
