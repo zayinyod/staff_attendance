@@ -6,7 +6,7 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 class Department(models.Model):
-    name = models.CharField(max_length=100, verbose_name="部署名")
+    name = models.CharField(max_length=100, verbose_name="Department")
 
     def __str__(self):
         return self.name
@@ -16,46 +16,36 @@ def create_id():
 
 class User(AbstractUser):
     user_id = models.CharField(
-        primary_key=True, default=create_id, max_length=6, editable=False, verbose_name="ユーザID")
+        primary_key=True, default=create_id, max_length=6, editable=False, verbose_name="User ID")
     department = models.ForeignKey(
-        Department, on_delete=models.SET_NULL, null=True, verbose_name="部署名")
-    # アイコン, 有給, 二要素認証
+        Department, on_delete=models.SET_NULL, null=True, verbose_name="Department")
 
     def __str__(self):
-        return f"{self.user_id}, {self.username}, {self.email}, {self.department}"
+        return f"{self.user_id}; {self.username}; {self.email}; {self.department}"
 
 class Clock(models.Model):
-    datetime_now = datetime.now(ZoneInfo("Asia/Tokyo")).strftime("%Y.%m.%d %H:%M:%S")
+    now = datetime.now(ZoneInfo("Asia/Tokyo")).strftime("%Y-%m-%d %H:%M:%S")
 
     clock_status = [
-        ("clock_in", "出勤"),
-        ("clock_out", "退勤"),
+        ("clock_in", "In"),
+        ("clock_out", "Out"),
     ]
 
     location_status = [
-        ("office", "オフィス"),
-        ("telework", "在宅"),
+        ("office", "Office"),
+        ("telework", "Telework"),
     ]
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="ユーザ名")
-    time_stamp = models.DateTimeField(default=datetime_now, verbose_name="日時")
-    clock = models.CharField(max_length=20, choices=clock_status, verbose_name="in/out")
-    break_time = models.IntegerField(default=1, verbose_name="休憩時間")
-    location = models.CharField(max_length=20, default="office", choices=location_status, verbose_name="勤務場所")
-    # 丸め計算, 深夜時間, 残業時間, 合計勤務時間, 給与, 有給, 交通費
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Username")
+    time_stamp = models.DateTimeField(default=now, verbose_name="Datetime")
+    clock = models.CharField(max_length=20, default="In", choices=clock_status, verbose_name="In/Out")
+    break_time = models.IntegerField(default=1, verbose_name="Break time")
+    location = models.CharField(max_length=20, default="Office", choices=location_status, verbose_name="Location")
 
     class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=["user", "time_stamp", "clock"],
-                name="clock_unique",
-            )
-        ]
+        unique_together = ("user", "time_stamp", "clock")
 
     def __str__(self):
-        return f"{self.user.user_id}, {self.user.username}, {self.time_stamp}"
+        return f"{self.user.user_id}; {self.user.username}; {self.time_stamp}"
 
 # class workflow:
-# ユーザ作成/削除
-# 承認ルート作成/削除
-# 申請/承認（有給申請, 打刻修正, 勤怠締め）
