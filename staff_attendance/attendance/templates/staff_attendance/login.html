@@ -1,0 +1,16 @@
+{% extends "staff_attendance/base.html" %}
+{% block body %}
+
+<div class="main">
+  <form>
+    <h1>Staff Attendance</h1>
+    <div class="certificate">
+      <input class="input" type="text" placeholder="user id">
+      <input class="input" type="password" placeholder="password">
+      <p><a class="btn" href="{% url 'clock' %}">Log in</a></p>
+      <a class="reset" href="#">forgotten password?</a>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

@@ -69,13 +69,37 @@
 ・Log in
 ---
 ・Dashboard
+・Clock
 ・Timesheets
 ・Administration
 ・Log out
 
 ★データ設計
-★備考
+1.user table
+  ・ユーザID（6桁）
+  ・ユーザ名
+  ・アイコン
+  ・所属部署（Foreign Key）
+  ・メールアドレス
+  ・有給
+  ・パスワード（英数字/記号 9桁以上）
+  ・二要素認証
+  ・管理者権限
 
+2.department table
+  ・所属部署
+
+3.clock table
+  ・ユーザ名（Foreign Key）
+  ・日時
+  ・打刻
+  ・休憩時間
+  ・勤務場所
+
+4.workflow table
+  ・
+
+★備考
 
 
 
